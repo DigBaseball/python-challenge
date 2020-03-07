@@ -1,0 +1,5 @@
+Total Months: 86
+Total: $38382578
+Average Change: $446309.05
+Greatest Profits: Feb-2012 ($1170593)
+Greatest Losses: Sep-2013 ($-1196225)

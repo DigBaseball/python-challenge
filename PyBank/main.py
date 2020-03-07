@@ -11,9 +11,6 @@ import csv
 # _____________________________________ #
 # ~ ~ ~   CREATE SOME VARIABLES   ~ ~ ~ #
 
-# Create and initialize a list for storing the dataset
-months = []
-
 # Create and initialize the total number of months included in the dataset
 total_months = 0
 
@@ -70,7 +67,7 @@ with open(budget_csv, 'r') as csvfile:
     for month in budget_data:
         
         # Add this row to the list of monthly data
-        months.append(month)
+        total_months += 1
         
         # Set this month's starting total "Profit/Losses"
         starting_profit_loss = ending_profit_loss
@@ -94,8 +91,6 @@ with open(budget_csv, 'r') as csvfile:
 # _________________________________________ #
 # ~ ~ ~   PERFORM ADDITIONAL ANALYSIS ~ ~ ~ #
 
-# Calculate the total number of months included in the dataset
-total_months = len(months)
 
 # Calculate the average of the changes in "Profit/Losses" over the entire priod
 average_change = ending_profit_loss / total_months

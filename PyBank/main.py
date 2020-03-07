@@ -27,13 +27,13 @@ greatest_increase_month = ""
 greatest_decrease = 0
 
 # Create and initialize the month of greatest losses (date) over the entire period
-greatest_increase_month = ""
+greatest_decrease_month = ""
 
 # Create and initialize the row of the month of greatest loss
 greatest_loss_row = 1
 
 # Create a variable for printing the analysis
-#analysis = ""
+analysis = ""
 
 # ___________________________________________ #
 # ~ ~ ~   CREATE SOME LOOPING VARIABLES ~ ~ ~ #

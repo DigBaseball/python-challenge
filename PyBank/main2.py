@@ -14,24 +14,19 @@ import csv
 # Create and initialize the total number of months included in the dataset
 total_months = 0
 
-# Create and initialize the net total amount of profit/losses
-total_change = 0
-
-total_relative_change = 0
-
 # Create and initialize the average of the changes in "Profit/Losses" over the entire period
 average_change = 0.0
 
-# Create and initialize the greatest monthly relative increase in profit growth
+# Create and initialize the greatest monthly profits (date and amount) over the entire period
 greatest_increase = 0
 
-# Create and initialize the month of greatest relative increase in profit growth
+# Create and initialize the month of greatest profits (date and amount) over the entire period
 greatest_increase_month = ""
 
-# Create and initialize the greatest monthly relative decrease in profit growth
+# Create and initialize the greatest monthly losses (date) over the entire period
 greatest_decrease = 0
 
-# Create and initialize the month of greatest relative decrease in profit growth
+# Create and initialize the month of greatest losses (date) over the entire period
 greatest_decrease_month = ""
 
 # Create and initialize the row of the month of greatest loss
@@ -43,11 +38,11 @@ analysis = ""
 # ___________________________________________ #
 # ~ ~ ~   CREATE SOME LOOPING VARIABLES ~ ~ ~ #
 
-# Create and initialize the previous month's "Profit/Losses"
-previous_profit_loss = 0
+# Create and initialize the starting (e.g. previous monthly ending) net total "Profit/Losses"
+starting_profit_loss = 0
 
-# Create and initialize the current month's "Profit/Losses"
-current_profit_loss = 0
+# Create and initialize the net total (e.g. current monthly ending) net total "Profit/Losses" over the entire period
+ending_profit_loss = 0
 
 # Create and initialize the current monthly change in "Profit/Losse"
 monthly_change = 0
@@ -74,40 +69,34 @@ with open(budget_csv, 'r') as csvfile:
         # Add this row to the list of monthly data
         total_months += 1
         
-        # Store this month's profit/loss
-        current_profit_loss = int(month[1]) - previous_profit_loss
+        # Set this month's starting total "Profit/Losses"
+        starting_profit_loss = ending_profit_loss
         
-        # Store last month's profit/loss
-        previous_profit_loss = int(month[1])
+        # Add (or subtract) the current row's value for profit/loss to the variable tracking total amount of profit/loss
+        ending_profit_loss = ending_profit_loss + int(month[1])
         
-        # Add this month's profit/loss to the running count of profit/loss
-        total_change = total_change + previous_profit_loss
-        
-        # Add this month's change to the total relative change
-        total_relative_change = total_relative_change + current_profit_loss
+        # Calculate the monthly change
+        monthly_change = ending_profit_loss - starting_profit_loss
         
         # Determine endpoints for the dataset (min and max monthly profit/loss changes)
-        if current_profit_loss > greatest_increase:
-            greatest_increase = current_profit_loss
+        if monthly_change > greatest_increase:
+            greatest_increase = monthly_change
             greatest_increase_month = month[0]
         
-        elif current_profit_loss < greatest_decrease:
-            greatest_decrease = current_profit_loss
+        elif monthly_change < greatest_decrease:
+            greatest_decrease = monthly_change
             greatest_decrease_month = month[0]
         
-        # Capture first month's profit/loss
-        if total_months == 1:
-            first_month = int(month[1])
 
 # _________________________________________ #
 # ~ ~ ~   PERFORM ADDITIONAL ANALYSIS ~ ~ ~ #
 
 
 # Calculate the average of the changes in "Profit/Losses" over the entire priod
-average_change = (total_relative_change - first_month) / (total_months - 1)
+average_change = ending_profit_loss / total_months
 
 # Format the analysis
-analysis =  "Total Months: " + str(total_months) + "\nTotal: $" + str(total_change) + ("\nAverage Change: $%8.2f" % (average_change)) + "\nGreatest Increase in Profits: " + str(greatest_increase_month) + " ($" + str(greatest_increase) + ")\nGreatest Decrease in Profits: " + str(greatest_decrease_month)+ " ($" + str(greatest_decrease) + ")"
+analysis =  "Total Months: " + str(total_months) + "\nTotal: $" + str(ending_profit_loss) + ("\nAverage Change: $%8.2f" % (average_change)) + "\nGreatest Profits: " + str(greatest_increase_month) + " ($" + str(greatest_increase) + ")\nGreatest Losses: " + str(greatest_decrease_month)+ " ($" + str(greatest_decrease) + ")"
 
 
 # ____________________________________________ #

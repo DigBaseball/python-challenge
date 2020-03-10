@@ -20,7 +20,11 @@ candidate_names = []
 # Create and initialize a list of the total number of votes each candidate won
 candidate_votes = []
 
-# Create and initialize the percentage of votes each candidate won
+# Create and initialize variable for identifying the vote total of the winning candidate
+winner_votes = 0
+
+# Create and initialize a variable for identifying the name of the winning candidate
+winner = ""
 
 # Create a variable for printing the analysis
 analysis = ""
@@ -59,24 +63,28 @@ with open(election_csv, 'r') as csvfile:
             candidate_votes.append("1")
 
 
-# _________________________________________ #
-# ~ ~ ~   PERFORM ADDITIONAL ANALYSIS ~ ~ ~ #
+# ______________________________________________ #
+# ~ ~ ~   PERFORM ANALYSIS AND PRINT OUPUT ~ ~ ~ #
 
 
-# Format the analysis
+# Add the overal vote total to the analysis
 analysis = "Total Votes: " + str(total_votes)
 
-
-# ____________________________________________ #
-# ~ ~ ~   OUTPUT ANALYSIS TO THE TERMINAL ~ ~ ~ #
-
-
-
+# Analyze the lists of candidates and their vote totals
 for candidate in candidate_names:
-    #print(f"{candidate}: {round(int(candidate_votes[candidate_names.index(candidate)])/total_votes*100,4)}% ({candidate_votes[candidate_names.index(candidate)]})")
     
+    # Summarize each candidate's performance
     analysis = analysis + (
         f"\n{candidate}: {round(int(candidate_votes[candidate_names.index(candidate)])/total_votes*100,4)}% ({candidate_votes[candidate_names.index(candidate)]})")
+    
+    # Find the winner
+    if int(candidate_votes[candidate_names.index(candidate)]) > winner_votes:
+        winner_votes = int(candidate_votes[candidate_names.index(candidate)])
+        winner = candidate
+
+
+# Add the winner to the analysis
+analysis = analysis + (f"\nWinner: {winner}")
 
 # Print the analysis to the terminal
 print(analysis)

@@ -70,12 +70,16 @@ analysis = "Total Votes: " + str(total_votes)
 # ____________________________________________ #
 # ~ ~ ~   OUTPUT ANALYSIS TO THE TERMINAL ~ ~ ~ #
 
-# Print the analysis to the terminal
-print(analysis)
+
 
 for candidate in candidate_names:
-    print(f"{candidate}: {round(int(candidate_votes[candidate_names.index(candidate)])/total_votes*100,4)}% ({candidate_votes[candidate_names.index(candidate)]})")
+    #print(f"{candidate}: {round(int(candidate_votes[candidate_names.index(candidate)])/total_votes*100,4)}% ({candidate_votes[candidate_names.index(candidate)]})")
     
+    analysis = analysis + (
+        f"\n{candidate}: {round(int(candidate_votes[candidate_names.index(candidate)])/total_votes*100,4)}% ({candidate_votes[candidate_names.index(candidate)]})")
+
+# Print the analysis to the terminal
+print(analysis)
 
 # ____________________________________________ #
 # ~ ~ ~   OUTPUT ANALYSIS TO A NEW FILE ~ ~ ~ #

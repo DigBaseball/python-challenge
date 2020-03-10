@@ -15,7 +15,7 @@ import csv
 total_months = 0
 
 # Create and initialize the net total amount of profit/losses
-total_change = 0
+total_profit_loss = 0
 
 total_relative_change = 0
 
@@ -34,8 +34,6 @@ greatest_decrease = 0
 # Create and initialize the month of greatest relative decrease in profit growth
 greatest_decrease_month = ""
 
-# Create and initialize the row of the month of greatest loss
-greatest_loss_row = 1
 
 # Create a variable for printing the analysis
 analysis = ""
@@ -74,16 +72,16 @@ with open(budget_csv, 'r') as csvfile:
         # Add this row to the list of monthly data
         total_months += 1
         
-        # Store this month's profit/loss
+        # Store this month's change in profit/loss
         current_profit_loss = int(month[1]) - previous_profit_loss
         
-        # Store last month's profit/loss
+        # Store last month's change in profit/loss
         previous_profit_loss = int(month[1])
         
         # Add this month's profit/loss to the running count of profit/loss
-        total_change = total_change + previous_profit_loss
+        total_profit_loss = total_profit_loss + previous_profit_loss
         
-        # Add this month's change to the total relative change
+        # Add this month's change in profit/loss to the total change
         total_relative_change = total_relative_change + current_profit_loss
         
         # Determine endpoints for the dataset (min and max monthly profit/loss changes)
@@ -107,7 +105,7 @@ with open(budget_csv, 'r') as csvfile:
 average_change = (total_relative_change - first_month) / (total_months - 1)
 
 # Format the analysis
-analysis =  "Total Months: " + str(total_months) + "\nTotal: $" + str(total_change) + ("\nAverage Change: $%8.2f" % (average_change)) + "\nGreatest Increase in Profits: " + str(greatest_increase_month) + " ($" + str(greatest_increase) + ")\nGreatest Decrease in Profits: " + str(greatest_decrease_month)+ " ($" + str(greatest_decrease) + ")"
+analysis =  "Total Months: " + str(total_months) + "\nTotal: $" + str(total_profit_loss) + ("\nAverage Change: $%8.2f" % (average_change)) + "\nGreatest Increase in Profits: " + str(greatest_increase_month) + " ($" + str(greatest_increase) + ")\nGreatest Decrease in Profits: " + str(greatest_decrease_month)+ " ($" + str(greatest_decrease) + ")"
 
 
 # ____________________________________________ #
